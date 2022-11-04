@@ -25,6 +25,7 @@ void toPhoXiCameraDeviceInforamtion(const pho::api::PhoXiDeviceInformation& phoX
     }
 
     phoXiCameraDeviceInformation.firmwareVersion = phoXiDeviceInformation.FirmwareVersion;
+    phoXiCameraDeviceInformation.variant = phoXiDeviceInformation.Variant;
 }
 
 void toPhoXiCameraDeviceInforamtion(const std::vector<pho::api::PhoXiDeviceInformation>& phoXiDeviceInformation,

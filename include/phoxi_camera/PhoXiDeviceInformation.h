@@ -22,10 +22,10 @@ namespace phoxi_camera {
         };
         enum PhoXiDeviceType {
 #if PHOXI_SCANNER_ON
-            PhoXiScanner,
+            PhoXiScanner = pho::api::PhoXiDeviceType::Value::PhoXiScanner;
 #endif
 #if PHOXI_CAMERA_ON
-            PhoXiCamera,
+            PhoXiCamera = pho::api::PhoXiDeviceType::Value::MotionCam3D;
 #endif
             NoValue
         };
@@ -48,6 +48,7 @@ namespace phoxi_camera {
         std::string IPaddress;
         PhoXiConnectionStatus status;
         std::string firmwareVersion;
+        std::string variant;
     };
 }
 

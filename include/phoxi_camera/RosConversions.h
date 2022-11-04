@@ -17,15 +17,13 @@ void phoXiDeviceInforamtionToRosMsg(const phoxi_camera::PhoXiDeviceInformation& 
     deviceInformationMsg.IPaddress = phoXiDeviceInformation.IPaddress;
     deviceInformationMsg.status.status = phoXiDeviceInformation.status;
     deviceInformationMsg.firmwareVersion = phoXiDeviceInformation.firmwareVersion;
+    deviceInformationMsg.variant = phoXiDeviceInformation.variant;
 }
 
 void phoXiDeviceInforamtionToRosMsg(const std::vector<phoxi_camera::PhoXiDeviceInformation>& phoXiDeviceInformation,
                                     std::vector<phoxi_camera::DeviceInformation>& deviceInformationMsg) {
     deviceInformationMsg.clear();
     deviceInformationMsg.resize(phoXiDeviceInformation.size());
-    for (const auto& device : phoXiDeviceInformation) {
-        phoXiDeviceInforamtionToRosMsg(device, deviceInformationMsg.back());
-    }
     for (int i = 0; i < phoXiDeviceInformation.size(); ++i) {
         phoXiDeviceInforamtionToRosMsg(phoXiDeviceInformation[i], deviceInformationMsg[i]);
     }
