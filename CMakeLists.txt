@@ -1,13 +1,19 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.10)
+
+if(POLICY CMP0054)
+    cmake_policy(SET CMP0054 NEW)
+endif()
+
 project(phoxi_camera)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+if (NOT PHO_API_CMAKE_CONFIG_PATH)
+    set(PHO_API_CMAKE_CONFIG_PATH "$ENV{PHOXI_CONTROL_PATH}")
+endif()
 
-find_package(PhoXi REQUIRED CONFIG PATHS "$ENV{PHOXI_CONTROL_PATH}")
+find_package(PhoXi REQUIRED CONFIG PATHS "${PHO_API_CMAKE_CONFIG_PATH}")
+
 find_package(Eigen3 REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system)
-find_package(PCL REQUIRED)
+find_package(Boost REQUIRED)
 
 find_package(catkin REQUIRED
   COMPONENTS
@@ -94,7 +100,7 @@ catkin_package(
 )
 
 add_compile_options(-w)
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++14)
 add_compile_options(-fpermissive)
 add_compile_options(-pthread)
 add_compile_options(-O2)
@@ -143,12 +149,14 @@ target_link_libraries(
 target_link_libraries(
   ${PROJECT_NAME}_Ros_Interface
   ${PROJECT_NAME}_PhoXi_Interface
+  ${PHOXI_LIBRARY}
   ${catkin_LIBRARIES}
 )
 
 target_link_libraries( ${PROJECT_NAME}
     PRIVATE
         ${catkin_LIBRARIES}
+        ${PHOXI_LIBRARY}
         ${PROJECT_NAME}_Ros_Interface
 )
 
