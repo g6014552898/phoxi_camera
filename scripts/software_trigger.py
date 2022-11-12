@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import numpy as np
 import open3d as o3d
 import cv2
@@ -38,8 +39,8 @@ with Harvester() as h:
         features.SendTexture.value = True
         features.SendPointCloud.value = True
         features.SendNormalMap.value = True
-        features.SendDepthMap.value = True
-        features.SendConfidenceMap.value = True
+        features.SendDepthMap.value = False
+        features.SendConfidenceMap.value = False
         #features.SendEventMap.value = True         # MotionCam-3D exclusive
         #features.SendColorCameraImage.value = True # MotionCam-3D Color exclusive
 
@@ -51,9 +52,9 @@ with Harvester() as h:
         buffer = ia.fetch()             # grab first frame
         print(buffer)
 
-        features.TriggerFrame.execute() # trigger second frame
-        buffer = ia.fetch()             # grab second frame
-        print(buffer)
+        # features.TriggerFrame.execute() # trigger second frame
+        # buffer = ia.fetch()             # grab second frame
+        # print(buffer)
 
         payload = buffer.payload
 
@@ -103,14 +104,14 @@ with Harvester() as h:
             o3d.visualization.draw_geometries([pcd], width=800,height=600)
 
         # Color Camera Image
-        color_image_component = payload.components[6]
-        if color_image_component.width > 0 and color_image_component.height > 0:
-            # Reshape 1D array to 2D RGB image
-            color_image = color_image_component.data.reshape(color_image_component.height, color_image_component.width, 3).copy()
-            # Normalize array to range 0 - 65535
-            color_image = cv2.normalize(color_image, dst=None, alpha=0, beta=65535, norm_type=cv2.NORM_MINMAX)
-            # Show image
-            cv2.imshow("Color Camera Image", color_image)
+        # color_image_component = payload.components[6]
+        # if color_image_component.width > 0 and color_image_component.height > 0:
+            # # Reshape 1D array to 2D RGB image
+            # color_image = color_image_component.data.reshape(color_image_component.height, color_image_component.width, 3).copy()
+            # # Normalize array to range 0 - 65535
+            # color_image = cv2.normalize(color_image, dst=None, alpha=0, beta=65535, norm_type=cv2.NORM_MINMAX)
+            # # Show image
+            # cv2.imshow("Color Camera Image", color_image)
 
         # The ia object will automatically call the destroy method
         # once it goes out of the block.
